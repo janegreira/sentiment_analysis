@@ -93,6 +93,12 @@ def perceptron_single_step_update(
     completed.
     """
     # Your code here
+    if label*(current_theta@feature_vector+current_theta_0) <= 0:
+        current_theta = current_theta + label*feature_vector
+        current_theta_0 = current_theta_0 + label
+    return current_theta, current_theta_0
+
+
     raise NotImplementedError
 
 
@@ -122,10 +128,14 @@ def perceptron(feature_matrix, labels, T):
     the feature matrix.
     """
     # Your code here
+    theta = np.zeros(feature_matrix.shape[1])
+    theta_0 = 0
     for t in range(T):
         for i in get_order(feature_matrix.shape[0]):
             # Your code here
-            pass
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i], labels[i], theta, theta_0)
+
+    return theta, theta_0
     raise NotImplementedError
 
 
@@ -159,6 +169,17 @@ def average_perceptron(feature_matrix, labels, T):
     find a sum and divide.
     """
     # Your code here
+    theta = np.zeros(feature_matrix.shape[1])
+    theta_0 = 0
+    theta_total = np.zeros(feature_matrix.shape[1])
+    theta_0_total = 0
+
+    for t in range(T):
+        for i in get_order(feature_matrix.shape[0]):
+            theta, theta_0 = perceptron_single_step_update(feature_matrix[i], labels[i], theta, theta_0)
+            theta_total += theta
+            theta_0_total += theta_0
+    return theta_total/(T*feature_matrix.shape[0]), theta_0_total/(T*feature_matrix.shape[0])
     raise NotImplementedError
 
 
