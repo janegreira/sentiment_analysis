@@ -126,4 +126,7 @@ wordlist = [word for (idx, word) in sorted(zip(dictionary.values(), dictionary.k
 sorted_word_features = utils.most_explanatory_word(best_theta, wordlist)
 print("Most Explanatory Word Features")
 print(sorted_word_features[:10])
+print("Los comentarios mas criticos:")
+print(sorted_word_features[-10:-1])
+print("Los comentarios mas intrascendentes:")
 print(utils.less_explanatory_word(theta, wordlist[:10]))
