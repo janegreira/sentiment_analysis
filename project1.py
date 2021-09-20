@@ -286,6 +286,20 @@ def classify(feature_matrix, theta, theta_0):
     be considered a positive classification.
     """
     # Your code here
+    muestras = feature_matrix.shape[0]
+    variables = feature_matrix.shape[1]
+
+    # result = theta@feature_matrix+theta_0
+    b = np.zeros(muestras)
+    for i in range(muestras):
+        result = theta@feature_matrix[i] + theta_0
+        if result > 0:
+            b[i] = 1
+        else:
+            b[i] = -1
+    return b
+
+    
     raise NotImplementedError
 
 
@@ -322,6 +336,17 @@ def classifier_accuracy(
     accuracy of the trained classifier on the validation data.
     """
     # Your code here
+    
+    theta, theta_0 = classifier(train_feature_matrix, train_labels, **kwargs)
+
+    y_train = classify(train_feature_matrix, theta, theta_0)
+    accuracy_train = accuracy(y_train, train_labels)
+
+    y_validation = classify(val_feature_matrix, theta, theta_0)
+    accuracy_validation = accuracy(y_validation, val_labels)
+
+    return accuracy_train, accuracy_validation
+
     raise NotImplementedError
 
 
